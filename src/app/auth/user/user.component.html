@@ -1,0 +1,37 @@
+<div class="profile__wrapper">
+    <div class="profile__image form-group">
+         <img *ngIf="this.fileData" [src]="fileData" alt="preview"> 
+    </div>
+    <div class="profile__links">
+        <p><a (click)="editPhotoClick()">Edit Photo</a></p>
+        <p><a [routerLink]="['/auth/profile-create']"
+            (click)="updateProfile()">Edit Profile</a></p>
+    </div>
+
+    <div class="profile__image form-group">
+        <label class="profile__image-label"
+                for="file">Upload Your Photo</label>
+
+        <input #profilePicClick
+                type="file"
+                id="file"
+                (change)="fileUpload($event)">
+         <img *ngIf="this.fileData" class="" [src]="fileData" alt="preview"> 
+    </div>
+        
+    <div class="profile__form" *ngIf="this.profileCreated">
+        I am <span class="user__details">{{this.userDetails.fname}} </span>  <span class="user__details"> {{this.userDetails.lName}}</span>  and I am <span class="user__details">{{this.userDetails.age}} years old</span> and you can send your emails to <span class="user__details">{{this.userDetails.email}}</span> I lives in the state of <span class="user__details">{{this.userDetails.state}}</span>
+        I likes to play <span class="user__details">{{this.userHobbiesList}}</span><span class="user__details" *ngIf="this.checkBoxData">And please send me the news letters</span>.
+        Please reach out to me on my phone <span class="user__details">{{this.userDetails.number}}</span>.
+    
+        <div class="form-group profile__submit">
+            <button type="submit" 
+                    (click)="userAgreed()" 
+                    class="btn btn-primary">
+                    Agree
+            </button>
+        </div>
+    
+    </div>
+    
+</div>

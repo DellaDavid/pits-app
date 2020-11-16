@@ -1,0 +1,125 @@
+<div class="profile__wrapper">
+    <div class="profile__image form-group">
+        <label class="profile__image-label"
+                for="file">Upload Your Photo</label>
+        <input type="file"
+                id="file"
+                (change)="fileUpload($event)">
+         <img *ngIf="this.fileData" class="" [src]="fileData" alt="preview"> 
+    </div>
+        
+    <div class="profile__form">
+        <form [formGroup]="profileCreateFormGroup" (submit)="submit()">
+            <div class="form-group">
+                <label class="profile__label">Name</label>
+                <input type="text" 
+                    class="form-control profile__data" 
+                    placeholder="First Name"
+                    formControlName="fname">
+                <input type="text" 
+                    class="form-control profile__data" 
+                    placeholder="Last Name"
+                    formControlName="lName">
+            </div>
+            <div *ngIf="profileCreateFormGroup.controls.fname.touched || profileCreateFormGroup.controls.lName.touched">
+                <p *ngIf="profileCreateFormGroup.get('fname').hasError('pattern') || profileCreateFormGroup.get('lName').hasError('pattern')" 
+                    class="profile__alert">Please provide a valid name</p>
+            </div>
+            
+            
+            <div class="form-group">
+                <label class="profile__label">Age</label>
+                <input type="number" 
+                    min=1
+                    class="form-control profile__data" 
+                    placeholder="Age"
+                    formControlName="age">
+            </div>
+            <div class="form-group">
+                <label class="profile__label">Email</label>
+                <input type="email" 
+                    class="form-control profile__data" 
+                    placeholder="Email"
+                    formControlName="email">
+            </div>
+
+            <div *ngIf="profileCreateFormGroup.controls.email.touched">
+                <p *ngIf="profileCreateFormGroup.get('email').hasError('pattern')" 
+                    class="profile__alert">Please provide a valid email</p>
+            </div>
+
+            <div class="form-group">
+                <label class="profile__label">Tel</label>
+                <input type="tel" 
+                    class="form-control profile__data" 
+                    placeholder="Phone Number"
+                    formControlName="number">
+            </div>
+            <div *ngIf="profileCreateFormGroup.controls.number.touched">
+                <p *ngIf="profileCreateFormGroup.get('number').hasError('pattern')" 
+                    class="profile__alert">Only numbers allowed with limit 10</p>
+            </div>
+
+            <div class="form-group">
+                <label class="profile__label">State</label>
+                <select class="form-control profile__data" formControlName="state">
+                    <option></option>
+                    <option>Alaska</option>
+                    <option>Kerala</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="profile__label">Country</label>
+                <select class="form-control profile__data" formControlName="country">
+                    <option></option>
+                    <option>Company Address 1</option>
+                    <option>Company Address 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="profile__label">Address</label>
+                <select class="form-control profile__data" formControlName="address">
+                    <option></option>
+                    <option>Address1</option>
+                    <option>Address2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="profile__label">Interest</label>
+                <input type="text" 
+                    class="form-control profile__data" 
+                    placeholder="Interest"
+                    formControlName="interest"
+                    (keyup.enter)="interestAdd()"
+                    (focus)="onIPFocus(true)"
+                    (focusout)="onIPFocus(false)">
+                    <span *ngIf="this.profileCreateFormGroup.controls.interest.value"
+                           class="profile__alert">Press enter to add to the list!</span>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="profile__interstlist" 
+                        *ngFor="let items of interestArray;let i = index">
+                        {{items}}
+                        <span class="profile__list-delete"
+                                (click)="delete(i)"> X </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="profile__checkbox">
+                <input type="checkbox"
+                    value={{isCheckboxCheckedorNot}} (change)="checkBoxEdit($event)">
+                <label for="checkbox"> Subscribe to news letter</label>
+            </div>
+            
+            <div class="form-group profile__submit">
+                <button type="submit"  
+                        class="btn btn-primary"
+                        [disabled] = "!profileCreateFormGroup.valid || this.interestArray.length == 0" >
+                        Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
